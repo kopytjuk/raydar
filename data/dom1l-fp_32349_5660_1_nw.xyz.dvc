@@ -1,0 +1,8 @@
+md5: a3dcdea54c2c8b7f7a16b4f21b7a6b47
+wdir: ..
+outs:
+- md5: a105617ab6b6b341235be22df075fe0b
+  path: data/dom1l-fp_32349_5660_1_nw.xyz
+  cache: true
+  metric: false
+  persist: false
