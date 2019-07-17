@@ -1,0 +1,5 @@
+
+['remote "myremote"']
+url = azure://students/height-map
+[core]
+remote = myremote
