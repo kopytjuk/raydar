@@ -8,11 +8,15 @@ verify_ssl = true
 [packages]
 numpy = "*"
 pandas = "*"
-pyproj = "*"
+pyproj = {path = "wheels/pyproj-2.2.2-cp37-cp37m-win_amd64.whl"}
 tqdm = "*"
-shapely = "*"
+shapely = {path = "wheels/Shapely-1.6.4.post2-cp37-cp37m-win_amd64.whl"}
 matplotlib = "*"
 jupyter = "*"
+gdal = {path = "wheels/GDAL-2.4.1-cp37-cp37m-win_amd64.whl"}
+fiona = {path = "wheels/Fiona-1.8.6-cp37-cp37m-win_amd64.whl"}
+rtree = {path = "wheels/Rtree-0.8.3-cp37-cp37m-win_amd64.whl"}
+geopandas = "*"
 
 [requires]
 python_version = "3.7"
