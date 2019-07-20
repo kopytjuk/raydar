@@ -1,3 +1,5 @@
+"""Simple converter of XYZ (ETRS89 / UTM zone 32N) points into WGS84.
+"""
 import os
 import glob
 import argparse
