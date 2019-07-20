@@ -1,0 +1,15 @@
+md5: 27278cf21b535b3a0569141a273939ea
+cmd: python convert.py data/dom1l-fp_32349_5660_1_nw.xyz data/dom1l-fp_32349_5660_1_nw.wgs84.csv
+  --verbose
+wdir: .
+deps:
+- md5: ad7944350f359da759cf9162b90c61e3
+  path: convert.py
+- md5: a105617ab6b6b341235be22df075fe0b
+  path: data/dom1l-fp_32349_5660_1_nw.xyz
+outs:
+- md5: 6b95dfb47bec1f5428de0b9b705c5cf8
+  path: data/dom1l-fp_32349_5660_1_nw.wgs84.csv
+  cache: true
+  metric: false
+  persist: false
