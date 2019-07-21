@@ -57,8 +57,6 @@ def project_sunray(P, zenith, azimut):
     zen_radian = zenith/360 * 2 * math.pi
     elev_radian = math.pi/2 - zen_radian
 
-    print(az_radian, zen_radian)
-
     # projected points on the sunray
     R = P @ R_z(-az_radian).T @ R_y(elev_radian).T
     return R
