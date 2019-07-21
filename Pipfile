@@ -17,6 +17,7 @@ gdal = {path = "wheels/GDAL-2.4.1-cp37-cp37m-win_amd64.whl"}
 fiona = {path = "wheels/Fiona-1.8.6-cp37-cp37m-win_amd64.whl"}
 rtree = {path = "wheels/Rtree-0.8.3-cp37-cp37m-win_amd64.whl"}
 geopandas = "*"
+astropy = "*"
 
 [requires]
 python_version = "3.7"
