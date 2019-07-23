@@ -1,5 +1,5 @@
 md5: 27278cf21b535b3a0569141a273939ea
-cmd: python convert.py data/dom1l-fp_32349_5660_1_nw.xyz data/dom1l-fp_32349_5660_1_nw.wgs84.csv
+cmd: python raydar/convert.py data/dom1l-fp_32349_5660_1_nw.xyz data/dom1l-fp_32349_5660_1_nw.wgs84.csv
   --verbose
 wdir: .
 deps:

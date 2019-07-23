@@ -10,20 +10,7 @@ import numpy as np
 import pyproj
 from pyproj import CRS, Transformer
 from tqdm import tqdm, tqdm_notebook
-
-class Announce(object):
-    def __init__(self, action, end, disable=False):
-        self.action = action
-        self.end = end
-        self.disable = disable
-    def __enter__(self):
-        if not self.disable:
-            print(self.action)
-        self.start_time = time.time()
-    def __exit__(self, type, value, traceback):
-        duration = time.time() - self.start_time
-        if not self.disable:
-            print(self.end, "(%.2fs)"%duration)
+from .utils import Announce
 
 
 def map_to_wgs84(src, dest, verbose=True):

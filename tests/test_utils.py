@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime
 
-from utils import get_sun_state, project_sunray
+from raydar.utils import get_sun_state, project_sunray
 import numpy as np
 
 
