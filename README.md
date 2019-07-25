@@ -2,6 +2,8 @@
 
 Library to detect light barriers from sunlight (e.g. for shadows) given a LIDAR (aerial laser scanning) point cloud, a WGS84 location and time (UTC).
 
+![raydar](assets/raydar.gif)
+
 Top view on point cloud, sunray direction and projected horizontal axis $y$,
 
 ![debug](assets/debug1.png)
