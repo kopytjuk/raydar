@@ -9,7 +9,7 @@ import shapely.ops as sho
 import numpy as np
 from pyproj import CRS, Transformer
 
-from utils import get_sun_state, project_sunray, Announce
+from .utils import get_sun_state, project_sunray, Announce
 
 
 # helper functions
