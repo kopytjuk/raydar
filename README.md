@@ -4,17 +4,15 @@ Library to detect light barriers from sunlight (e.g. for shadows) given a LIDAR 
 
 ![raydar](assets/raydar.gif)
 
-Top view on point cloud, sunray direction and projected horizontal axis $y$,
+## Explanation
 
-![debug](assets/debug1.png)
+![explanation](assets/explanation.png)
 
-Shadow detection algorithm:
+Right image shows top view onto the point cloud (black..purple points). Yellow arrow shows the direction of the sunray towards the point of interest (red cross or the observer). The orange arrow shows the left-right view of the observer. As displayed on the left picture, the observer looks towards the sun.
 
-![debug](assets/debug2.png)
+If the observer detects any points between the two vertical yellow lines in the left plot, he probably (not valid for bridges) is standing behind an obstacle in shadow.
 
-axis of abscissae: projected horizontal axis $y$
-
-If there are no points between the yellow interval, there are no obstacles for the sunray - i.e. no shadow expected.
+## Data
 
 Current prototype uses LIDAR data from Germany, NRW.
 

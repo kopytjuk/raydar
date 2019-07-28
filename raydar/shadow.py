@@ -22,10 +22,12 @@ to_utm_transformer = Transformer.from_crs(crs_4326, crs_25832)
 
 class Raydar(object):
 
-    def __init__(self, xyz_path, shadow_resolution=10):
+    def __init__(self, xyz_path, shadow_resolution=10, N=100000):
         self._shadow_resolution = shadow_resolution
         with Announce("Reading points...", end="Done!"):
             df = pd.read_csv(xyz_path)
+            if N is not None:
+                df = df.sample(N)
             df = gpd.GeoDataFrame(df)
 
             # creating a geometry column
@@ -100,7 +102,9 @@ class Raydar(object):
         ax[0].axvline(-shadow_res_half, color="y")
         ax[0].axvline(shadow_res_half, color="y")
         ax[0].axhline(0, color="k")
-        ax[0].set_xlim([-R, R])
+        ax[0].set_xlim([R, -R])
+        ax[0].set_xlabel("y* [m]")
+        ax[0].set_ylabel("z* [m]")
 
         query_point_xy = shg.Point(to_utm_transformer.transform(lat_q, lon_q))
         zen, azimuth = get_sun_state(lat_q, lon_q, t_q)
@@ -115,9 +119,11 @@ class Raydar(object):
         ax[1].arrow(query_point_xy.x+dx, query_point_xy.y+dy, -dx, -dy, width=3,
                     head_width=5, length_includes_head=True, color="y", label="sun ray")
         ax[1].arrow(query_point_xy.x, query_point_xy.y, -dy, +dx,
-                    head_width=5, length_includes_head=False, color="k")
+                    head_width=5, length_includes_head=False, color="orange")
         ax[1].text(query_point_xy.x-dy, query_point_xy.y +
-                   dx+10, "y-axis", fontsize=12)
+                   dx+10, "y*-axis", fontsize=12)
+        ax[1].set_xlabel("x [m]")
+        ax[1].set_ylabel("y [m]")
         ax[1].legend()
 
         #ax[1].title(t_q)
