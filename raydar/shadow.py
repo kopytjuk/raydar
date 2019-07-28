@@ -47,7 +47,8 @@ class Raydar(object):
         
         # TODO: maybe we can make that work faster ...
         gdf = self.pts.copy()
-        return gdf[gdf.intersects(query_region_wgs84)]
+        res = gdf[gdf.intersects(query_region_wgs84)]
+        return res
 
     def _get_internal_calculation(self, lat_q, lon_q, t_q, R):
 
