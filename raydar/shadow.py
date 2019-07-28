@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,7 +10,7 @@ import shapely.ops as sho
 import numpy as np
 from pyproj import CRS, Transformer
 
-from .utils import get_sun_state, project_sunray, Announce
+from .utils import get_sun_state, project_sunray, Announce, R_z
 
 
 # helper functions
@@ -48,7 +49,7 @@ class Raydar(object):
         gdf = self.pts.copy()
         return gdf[gdf.intersects(query_region_wgs84)]
 
-    def _get_projected_points_and_query_points(self, lat_q, lon_q, t_q, R):
+    def _get_internal_calculation(self, lat_q, lon_q, t_q, R):
 
         gdf_query = self._get_points_around_query(lat_q, lon_q, R)
         
@@ -64,18 +65,23 @@ class Raydar(object):
 
         query_time = t_q  # datetime(2019, 7, 21, 8, 0, 0)
 
-        zen, azimuth = get_sun_state(lat_q, lon_q, query_time)
+        zen, azimut = get_sun_state(lat_q, lon_q, query_time)
 
         # project the origin axes to the axes of the sunray
         P = gdf_query[["x_proj", "y_proj", "z_proj"]].values
-        P_ray = project_sunray(P, zen, azimuth)
+        P_ray = project_sunray(P, zen, azimut)
 
-        return P_ray, gdf_query
+        return P_ray, gdf_query, P, zen, azimut
 
     def debug_plot(self, lat_q, lon_q, t_q, R):
 
-        P_ray, gdf_query = self._get_projected_points_and_query_points(
+        P_ray, gdf_query, P, zen, azimut = self._get_internal_calculation(
             lat_q, lon_q, t_q, R)
+
+        az_radian = azimut/360 * 2 * math.pi
+        
+        # we rotate towards sun
+        P_towards_sun = P @ R_z(-az_radian).T
 
         # remove all points with negative x, since they are behind the query point
         P_ray = P_ray[P_ray[:, 0] >= 0]
@@ -85,10 +91,10 @@ class Raydar(object):
 
         shadow_res_half = self._shadow_resolution//2
 
-        fig, ax = plt.subplots(nclos=2, figsize=(15, 7))
+        fig, ax = plt.subplots(ncols=2, figsize=(15, 7))
 
         # now we only plot, y and z axis
-        ax[0].scatter(P_ray[:, 1], P_ray[:, 2])
+        ax[0].scatter(P_ray[:, 1], P_ray[:, 2], )
         ax[0].scatter(0, 0, s=200, marker="+")
         ax[0].axvline(-shadow_res_half, color="y")
         ax[0].axvline(shadow_res_half, color="y")
@@ -100,7 +106,7 @@ class Raydar(object):
 
         ax[1].scatter(gdf_query["x"], gdf_query["y"], c=gdf_query["z"],
                       s=10, cmap="inferno", label="LIDAR points")
-        plt.colorbar()
+        #plt.colorbar()
         ax[1].scatter([query_point_xy.x], [query_point_xy.y],
                       marker='+', s=10000, color="red")
         dx = 100*np.sin(azimuth*2*np.pi/360)
@@ -116,11 +122,11 @@ class Raydar(object):
         #ax[1].title(t_q)
         fig.suptitle(t_q)
 
-        plt.show()
+        return fig
 
     def is_shadow(self, lat_q, lon_q, t_q, R):
 
-        P_ray, _ = self._get_projected_points_and_query_points(
+        P_ray, _, _, _, _ = self._get_internal_calculation(
             lat_q, lon_q, t_q, R)
 
         # remove all points with negative x,

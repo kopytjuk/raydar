@@ -1,5 +1,6 @@
 *.ipynb_checkpoints
 data/extracted/*
 wheels/*
+images/*
 .pytest_cache
 .env
